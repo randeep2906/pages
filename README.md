@@ -1,1 +1,1 @@
-JS data structure is an example of  how to use objects in Java script
+JavascriptDataStructure file is an example of  how to use objects in Java script
