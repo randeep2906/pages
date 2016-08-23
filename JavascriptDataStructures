@@ -1,0 +1,232 @@
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/mailtoharshit/San-Francisco-Font-/master/sanfrancisco.css">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css" />
+     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script>
+    $(function() {
+        var availableTags = [
+            "CR-Newton",
+            "CR-Franklin",
+            "CR-Galileo",
+            "CR-Einstein",
+            "CR-Edison",
+            "CR-Watt",
+            "CR-Gemini",
+            "CR-IT Training Room",
+            "CR-EDW Training Room"
+        ];
+        $("#search").autocomplete({
+            source: availableTags
+        });
+
+        $("#search").on("autocompleteselect", function(event, ui) {
+            console.log('select event triggered');
+            showResult(ui.item.value);
+        });
+
+        $('#search').keypress(function(e, ui) {
+            if (e.keyCode == $.ui.keyCode.ENTER) {
+                showResult(ui.item.value);
+            }
+        });
+
+        //clear result on clicking searchbar
+        $("#search").on("click", function() {
+            if ($(this).val() != "") {
+                $(this).val("");
+                $("#mapwrapper").empty();
+                $("#description").empty();
+            }
+
+        });
+
+        //Room Data Dictionary seeding thar hard-coded room values 
+        var roomData = {
+            'CR-Newton': {
+                'bldg': '950',
+                'location': 'First floor',
+                'img': 'https://intusurgops.sharepoint.com/company/locations/Shared%20Documents/Meeting%20Rooms%20-%20images/B950.png'
+            },
+            'CR-Franklin': {
+                'bldg': '108',
+                'location': 'First floor',
+                'img': 'https://intusurgops.sharepoint.com/company/locations/Shared%20Documents/Meeting%20Rooms%20-%20images/B950.png'
+            },
+            'CR-Edison': {
+                'bldg': '1200',
+                'location': 'First floor',
+                'img': 'https://intusurgops.sharepoint.com/company/locations/Shared%20Documents/Meeting%20Rooms%20-%20images/B950.png'
+            }
+        };
+
+        //Room Search Function 
+        function roomFound(param) {
+
+            return roomData.hasOwnProperty(param) ? true : false;
+        }
+
+
+        function showResult(param) {
+            if (roomFound(param)) {
+
+                var resultToShow = param + ' is in building ' + roomData[param].bldg + ', on ' + roomData[param].location;
+                $('#description').text(resultToShow);
+
+                $('#mapwrapper').append('<img id="map" class="slideInDown" src="' + roomData[param].img + '" />');
+            } else {
+
+                $('#description').text('No Matching Room Found');
+            }
+        }
+
+        //Search Click Function 
+        $("#searchbutton").click(function() {
+
+            showResult();
+
+        });
+
+    });
+    </script>
+    <style type="text/css">
+    .input-field input[type=search] {
+        display: block;
+        line-height: inherit;
+        padding-left: 0rem;
+        width: calc(100% - 4rem);
+        font-size: 22px;
+        text-align: left;
+        color: grey;
+    }
+    
+    .flow-text {
+        font-size: 1.656rem;
+    }
+    
+    .title-header {
+        font-size: 28px;
+    }
+    
+    #descritption {
+        font-size: 22px;
+    }
+    
+    .ui-widget {
+        font-family: Roboto;
+        font-size: 1.18rem;
+        color: rgba(0, 0, 0, 0.71);
+        line-height: 1.5;
+        font-family: "Roboto", sans-serif;
+        font - size: 16 px;
+        color: #26a69a;
+        display: block;
+        line-height: 22px;
+        padding: 14px 16px;
+    }
+    
+    .ui-widget-content {
+        /* border: 1px solid #dddddd; */
+        overflow-y: auto;
+        z-index: 999;
+    }
+    
+    .titleText {
+        margin-left: 52px;
+    }
+    
+    .searchbutton {
+        margin-left: 30%;
+    }
+    
+    .description {}
+    
+    .material-icons{
+        display: inline;
+        padding-top:2%;
+        float:right;
+        margin-left:3% ;
+        color:#188FE1;
+    }
+    .input-field input[type=search] {
+    display: block;
+    line-height: inherit;
+    padding-left: 0rem;
+    margin-top: -11%;
+    width: calc(100% - 4rem);
+    font-size: 22px;
+    text-align: left;
+    color: grey;
+    }
+    .input-field input[type=search] ~ .material-icons {
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    color: #188FE1;
+    cursor: pointer;
+    font-size: 2rem;
+    transition: .3s color;
+    }
+    #map{
+        width:60%;
+        height:60%;
+    }
+    
+    </style>
+   
+</head>
+
+<body>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <div class="container">
+        <!-- Page Content goes here -->
+        <div class="row">
+            <div class="col s7 offset-s2">
+                <div id="titleText" class="titleText center-align">
+                    <p class="ultralight title-header center-align">
+                        What Room are you looking for ?</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s8 offset-s2">
+                <form>
+                    <div class="ui-widget">
+                        <div class="input-field">
+                            <input placeholder="Search" id="search" type="search" class="flow-text left-align" x-webkit-speech style="width:100%;border:1px solid black;"/><i class="material-icons">search</i>
+                           <!--  <a id="searchbutton" style="margin-top:40px" class="waves-effect waves-light btn">Search</a> -->
+                            </input>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="description" class="   ultralight title-header center-align">
+        </div>
+        <div id="mapwrapper" class="mapimage center-align">
+        </div>
+         <script>
+      //   $(document).ready(function(){
+      //   $('#mapwrapper').each(function(){
+      //   $(this).click(function(){
+      //   $(this).width($(this).width()+ $(this).width());
+      //   $(this).height($(this).height()+$(this).height());
+      //   });
+      //   })
+      // });      
+            
+    </script>
+        
+</body>
+
+</html>
